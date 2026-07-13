@@ -7,6 +7,11 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "out/**", ".next/**", "!.next/cache/**"]
     },
+    "lint": {
+      "dependsOn": ["^lint"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/eslint.config.mjs"],
+      "outputs": []
+    },
     "typecheck": {
       "dependsOn": ["^typecheck"],
       "outputs": []

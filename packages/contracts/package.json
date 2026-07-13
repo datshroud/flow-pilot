@@ -16,6 +16,7 @@
   ],
   "scripts": {
     "build": "tsc --build tsconfig.json",
+    "lint": "eslint src --max-warnings 0",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "clean": "tsc --build tsconfig.json --clean"
   }
