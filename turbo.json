@@ -1,29 +1,18 @@
 {
-    "$schema": "https://turborepo.dev/schema.json",
-    "ui": "stream",
-    "globalDependencies": [
-        "tsconfig.base.json"
-    ],
-    "tasks": {
-        "build": {
-            "dependsOn": [
-                "^build"
-            ],
-            "outputs": [
-                "dist/**",
-                "out/**",
-                ".next/**",
-                "!.next/cache/**"
-            ]
-        },
-        "typecheck": {
-            "dependsOn": [
-                "^typecheck"
-            ],
-            "outputs": []
-        },
-        "clean": {
-            "cache": false
-        }
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "stream",
+  "globalDependencies": ["tsconfig.base.json"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "out/**", ".next/**", "!.next/cache/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "outputs": []
+    },
+    "clean": {
+      "cache": false
     }
+  }
 }

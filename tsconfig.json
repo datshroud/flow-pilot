@@ -1,9 +1,9 @@
 {
-    "$schema": "https://www.schemastore.org/tsconfig",
-    "files": [],
-    "references": [
-        {
-            "path": "./packages/contracts"
-        }
-    ]
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/contracts"
+    }
+  ]
 }

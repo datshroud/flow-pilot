@@ -1,19 +1,22 @@
 {
-    "name": "cognitive-guard",
-    "version": "0.0.0",
-    "private": true,
-    "packageManager": "pnpm@11.12.0",
-    "engines": {
-        "node": ">=24.18.0 <25",
-        "pnpm": "11.12.0"
-    },
-    "scripts": {
-        "build": "turbo run build",
-        "typecheck": "turbo run typecheck",
-        "clean": "turbo run clean"
-    },
-    "devDependencies": {
-        "turbo": "2.10.4",
-        "typescript": "7.0.2"
-    }
+  "name": "cognitive-guard",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.12.0",
+  "engines": {
+    "node": ">=24.18.0 <25",
+    "pnpm": "11.12.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
+  },
+  "devDependencies": {
+    "prettier": "3.9.5",
+    "turbo": "2.10.4",
+    "typescript": "7.0.2"
+  }
 }
