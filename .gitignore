@@ -1,3 +1,32 @@
 # Local implementation work plan maintained during guided development
 /cognitive-guard-work-plan.docx
 /~$cognitive-guard-work-plan.docx
+
+#dependencies
+node_modules/
+.pnpm-store/
+
+# build artifact and caches
+dist/
+build/
+out/
+.next/
+.turbo/
+coverage/
+*.tsbuildinfo
+*.vsix
+
+# test artifacts
+playwright-report/
+test-results/
+
+#environment and logs
+.env
+.env.*
+!.env.example
+*.log
+pnpm-debug.log*
+
+#operating-system files
+.DS_Store
+Thumbs.db
