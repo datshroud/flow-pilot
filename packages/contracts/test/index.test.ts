@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 describe('@cognitive-guard/contracts', () => {
-  it('loads its public entry point', async () => {
-    await expect(import('../src/index.js')).resolves.toBeDefined();
+  it('exports its public health contracts', async () => {
+    const contracts = await import('../src/index.js');
+
+    expect(contracts.healthRespSchema).toBeDefined();
+    expect(contracts.healthStatusSchema).toBeDefined();
   });
 });
