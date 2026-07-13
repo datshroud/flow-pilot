@@ -1,6 +1,6 @@
 # Implementation Status
 
-Last updated: 2026-07-13
+Last updated: 2026-07-14
 
 ## Current milestone
 
@@ -8,20 +8,24 @@ M0 — Foundation
 
 ## Current brick
 
-M0.2 — Root monorepo foundation
+M0.4 — Health and error contracts
 
 ## Completed
 
-- [x] Verified Node.js 24.18.0, npm 11.16.0 and Corepack 0.35.0.
-- [x] Installed pnpm 11.12.0 through Corepack.
-- [x] Verified Docker Engine 28.4.0 and Docker Compose 2.39.4.
-- [x] Added Git ignore rules for the local DOCX work plan.
+- [x] Verified the Node.js, pnpm, Docker and Docker Compose toolchain.
 - [x] Recorded ADR-001 through ADR-008.
+- [x] Configured the pnpm workspace and pinned toolchain versions.
+- [x] Added strict TypeScript and a buildable contracts package.
+- [x] Configured Turborepo build, lint, typecheck, test and clean tasks.
+- [x] Added repository formatting and line-ending standards.
+- [x] Added typed ESLint rules with Prettier compatibility.
+- [x] Added Vitest, V8 coverage and the first contracts smoke test.
+- [x] Separated test typechecking from production build output.
 
 ## In progress
 
-- [ ] Create the root package manifest and pin the Node.js and pnpm versions.
-- [ ] Define the pnpm workspace and Turborepo task pipeline.
+- [ ] Add Zod to the contracts package.
+- [ ] Define and test the first health and public error schemas.
 
 ## Blockers
 
@@ -37,7 +41,7 @@ None for M0.
 
 ## M0 exit gate
 
-- [ ] Monorepo installs from the lockfile.
-- [ ] Format, lint, typecheck, unit tests and build pass.
+- [x] Monorepo installs from the lockfile.
+- [x] Format, lint, typecheck, unit tests and build pass.
 - [ ] Gateway, Workspace and Intelligence health endpoints respond.
 - [ ] PostgreSQL and Redis containers are healthy.

@@ -3,7 +3,7 @@
   "files": [],
   "references": [
     {
-      "path": "./packages/contracts"
+      "path": "./packages/contracts/tsconfig.build.json"
     }
   ]
 }
