@@ -8,7 +8,7 @@ M0 — Foundation
 
 ## Current brick
 
-M0.4 — Health and error contracts
+M0.5 — Local database and queue infrastructure
 
 ## Completed
 
@@ -21,11 +21,12 @@ M0.4 — Health and error contracts
 - [x] Added typed ESLint rules with Prettier compatibility.
 - [x] Added Vitest, V8 coverage and the first contracts smoke test.
 - [x] Separated test typechecking from production build output.
+- [x] Added Zod-backed health and public error contracts with unit tests.
 
 ## In progress
 
-- [ ] Add Zod to the contracts package.
-- [ ] Define and test the first health and public error schemas.
+- [ ] Add local PostgreSQL instances for Workspace and Intelligence.
+- [ ] Add Redis with container health checks.
 
 ## Blockers
 

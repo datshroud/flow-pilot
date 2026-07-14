@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // {
 //   "error": {
@@ -10,19 +10,19 @@ import { z } from "zod";
 // }
 
 export const publicErrorSchema = z
-    .object({
-        "code": z.string().min(1),
-        "message": z.string().min(1),
-        "requestId": z.string().min(1),
-        "details": z.array(z.unknown()),
-    })
-    .strict();
+  .object({
+    code: z.string().min(1),
+    message: z.string().min(1),
+    requestId: z.string().min(1),
+    details: z.array(z.unknown()),
+  })
+  .strict();
 
 export const errorEnvelopeSchema = z
-    .object({
-        error: publicErrorSchema,
-    })
-    .strict();
+  .object({
+    error: publicErrorSchema,
+  })
+  .strict();
 
 export type PublicError = z.infer<typeof publicErrorSchema>;
 export type ErrorEnvelope = z.infer<typeof errorEnvelopeSchema>;
