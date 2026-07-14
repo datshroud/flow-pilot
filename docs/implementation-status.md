@@ -1,6 +1,6 @@
 # Implementation Status
 
-Last updated: 2026-07-14
+Last updated: 2026-07-15
 
 ## Current milestone
 
@@ -8,7 +8,7 @@ M0 — Foundation
 
 ## Current brick
 
-M0.5 — Local database and queue infrastructure
+M0.6 — Service skeletons and health endpoints
 
 ## Completed
 
@@ -22,11 +22,12 @@ M0.5 — Local database and queue infrastructure
 - [x] Added Vitest, V8 coverage and the first contracts smoke test.
 - [x] Separated test typechecking from production build output.
 - [x] Added Zod-backed health and public error contracts with unit tests.
+- [x] Added local PostgreSQL and Redis infrastructure with health checks, isolated service database ownership and persistent named volumes.
 
 ## In progress
 
-- [ ] Add local PostgreSQL instances for Workspace and Intelligence.
-- [ ] Add Redis with container health checks.
+- [ ] Scaffold buildable Express apps for Gateway, Workspace and Intelligence.
+- [ ] Add and test `/health/live` and `/health/ready` for all three services.
 
 ## Blockers
 
@@ -36,13 +37,9 @@ None.
 
 None for M0.
 
-## Working tree note
-
-`README.md` is intentionally left unstaged by user direction.
-
 ## M0 exit gate
 
 - [x] Monorepo installs from the lockfile.
 - [x] Format, lint, typecheck, unit tests and build pass.
 - [ ] Gateway, Workspace and Intelligence health endpoints respond.
-- [ ] PostgreSQL and Redis containers are healthy.
+- [x] PostgreSQL and Redis containers are healthy.
