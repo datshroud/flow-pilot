@@ -7,6 +7,9 @@
     },
     {
       "path": "./apps/gateway/tsconfig.build.json"
+    },
+    {
+      "path": "./apps/workspace-service/tsconfig.build.json"
     }
   ]
 }
