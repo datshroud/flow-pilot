@@ -1,6 +1,6 @@
 # Implementation Status
 
-Last updated: 2026-07-15
+Last updated: 2026-07-17
 
 ## Current milestone
 
@@ -8,7 +8,7 @@ M0 — Foundation
 
 ## Current brick
 
-M0.6 — Service skeletons and health endpoints
+M0.7 — Continuous integration foundation
 
 ## Completed
 
@@ -23,11 +23,12 @@ M0.6 — Service skeletons and health endpoints
 - [x] Separated test typechecking from production build output.
 - [x] Added Zod-backed health and public error contracts with unit tests.
 - [x] Added local PostgreSQL and Redis infrastructure with health checks, isolated service database ownership and persistent named volumes.
+- [x] Added buildable Express health skeletons for Gateway, Workspace and Intelligence with shared contracts and unit tests.
 
 ## In progress
 
-- [ ] Scaffold buildable Express apps for Gateway, Workspace and Intelligence.
-- [ ] Add and test `/health/live` and `/health/ready` for all three services.
+- [ ] Add GitHub Actions CI for frozen install, format, lint, typecheck, unit tests and build.
+- [ ] Verify the CI workflow from a clean checkout.
 
 ## Blockers
 
@@ -41,5 +42,5 @@ None for M0.
 
 - [x] Monorepo installs from the lockfile.
 - [x] Format, lint, typecheck, unit tests and build pass.
-- [ ] Gateway, Workspace and Intelligence health endpoints respond.
+- [x] Gateway, Workspace and Intelligence health endpoints respond.
 - [x] PostgreSQL and Redis containers are healthy.

@@ -10,6 +10,9 @@
     },
     {
       "path": "./apps/workspace-service/tsconfig.build.json"
+    },
+    {
+      "path": "./apps/intelligence-api/tsconfig.build.json"
     }
   ]
 }
