@@ -27,8 +27,8 @@ M0.7 — Continuous integration foundation
 
 ## In progress
 
-- [ ] Add GitHub Actions CI for frozen install, format, lint, typecheck, unit tests and build.
-- [ ] Verify the CI workflow from a clean checkout.
+- [x] Add GitHub Actions CI for frozen install, format, lint, typecheck, unit tests and build.
+- [x] Verify the CI workflow from a clean checkout.
 
 ## Blockers
 
