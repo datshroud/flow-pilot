@@ -4,11 +4,11 @@ Last updated: 2026-07-17
 
 ## Current milestone
 
-M0 — Foundation
+M1 — Distributed skeleton
 
 ## Current brick
 
-M0.7 — Continuous integration foundation
+M1.1 — Project API contracts
 
 ## Completed
 
@@ -24,11 +24,14 @@ M0.7 — Continuous integration foundation
 - [x] Added Zod-backed health and public error contracts with unit tests.
 - [x] Added local PostgreSQL and Redis infrastructure with health checks, isolated service database ownership and persistent named volumes.
 - [x] Added buildable Express health skeletons for Gateway, Workspace and Intelligence with shared contracts and unit tests.
+- [x] Added and verified GitHub Actions CI from a clean checkout.
 
 ## In progress
 
-- [x] Add GitHub Actions CI for frozen install, format, lint, typecheck, unit tests and build.
-- [x] Verify the CI workflow from a clean checkout.
+- [ ] Define strict Zod contracts for creating and reading projects.
+- [ ] Cover valid and invalid project payloads with unit tests.
+- [ ] Export project contracts through the public contracts entry point.
+- [ ] Document the project HTTP contract.
 
 ## Blockers
 
@@ -44,3 +47,10 @@ None for M0.
 - [x] Format, lint, typecheck, unit tests and build pass.
 - [x] Gateway, Workspace and Intelligence health endpoints respond.
 - [x] PostgreSQL and Redis containers are healthy.
+
+## M1 exit gate
+
+- [ ] A fake analysis event travels through the distributed flow end-to-end.
+- [ ] Workspace and Intelligence persist data only in their own databases.
+- [ ] Duplicate events do not create duplicate business results.
+- [ ] Integration tests prove the main distributed flow.
