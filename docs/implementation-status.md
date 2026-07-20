@@ -1,6 +1,6 @@
 # Implementation Status
 
-Last updated: 2026-07-17
+Last updated: 2026-07-21
 
 ## Current milestone
 
@@ -8,7 +8,7 @@ M1 — Distributed skeleton
 
 ## Current brick
 
-M1.1 — Project API contracts
+M1.2 — Workspace project endpoints
 
 ## Completed
 
@@ -26,12 +26,15 @@ M1.1 — Project API contracts
 - [x] Added buildable Express health skeletons for Gateway, Workspace and Intelligence with shared contracts and unit tests.
 - [x] Added and verified GitHub Actions CI from a clean checkout.
 
+- [x] Added strict Zod contracts for creating and reading projects, with unit tests.
+- [x] Exported project contracts through the public entry point.
+- [x] Documented the project HTTP contract in docs/api.
+
 ## In progress
 
-- [ ] Define strict Zod contracts for creating and reading projects.
-- [ ] Cover valid and invalid project payloads with unit tests.
-- [ ] Export project contracts through the public contracts entry point.
-- [ ] Document the project HTTP contract.
+- [ ] Set up Prisma and the Workspace database Project model.
+- [ ] Implement POST /v1/projects and GET /v1/projects/:id in Workspace Service.
+- [ ] Cover the endpoints with integration tests.
 
 ## Blockers
 

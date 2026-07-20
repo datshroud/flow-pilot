@@ -8,5 +8,8 @@ describe('@cognitive-guard/contracts', () => {
     expect(contracts.publicErrorSchema).toBeDefined();
     expect(contracts.healthRespSchema).toBeDefined();
     expect(contracts.healthStatusSchema).toBeDefined();
+    expect(contracts.projectLanguageSchema).toBeDefined();
+    expect(contracts.createProjectRequestSchema).toBeDefined();
+    expect(contracts.projectResponseSchema).toBeDefined();
   });
 });
