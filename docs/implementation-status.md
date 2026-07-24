@@ -20,11 +20,11 @@ Six deployable services, started modular then split as boundaries prove out:
 
 ## Current milestone
 
-P0 — Pivot & re-foundation
+P1 — Platform core
 
 ## Current brick
 
-P0.5 — Contracts.
+P1.1 — To be planned
 
 ## Reused from the previous foundation (still valid)
 
@@ -38,8 +38,8 @@ P0.5 — Contracts.
 
 - [x] P0.2 Rewrite conflicting ADRs (004/006/007/008); add Kafka, outbox/inbox, JSONB, AI-guardrails, auth ADRs.
 - [x] P0.3 Rename identity: package `flowpilot`, scope `@flowpilot/*`, DB names, README.
-- [x] P0.4 Add Kafka (KRaft), MinIO, Mailpit to Docker Compose; fix DB init.
-- [ ] P0.5 Replace `project` contract with FlowPilot event envelope + first domain contracts.
+- [x] P0.4 Add Kafka (KRaft) to Docker Compose and provision the five FlowPilot service databases (MinIO/Mailpit deferred).
+- [x] P0.5 Replace `project` contract with FlowPilot event envelope + first domain contracts.
 
 ## Pivot roadmap (compressed)
 
