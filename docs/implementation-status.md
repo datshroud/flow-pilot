@@ -1,59 +1,54 @@
 # Implementation Status
 
-Last updated: 2026-07-21
+Last updated: 2026-07-24
+
+## Project
+
+FlowPilot — Event-driven multi-domain workflow platform with permission-aware AI Agents.
+(Pivoted from the retired "cognitive-guard" topic on 2026-07-24.)
+
+## Target architecture (solo, compressed 16-week track)
+
+Six deployable services, started modular then split as boundaries prove out:
+
+- api-gateway — stateless: auth, context propagation, SSE, response aggregation.
+- identity — user, tenant, membership, role, policy.
+- platform — metadata + case: entity/field/form definitions, dynamic records, cases, tasks.
+- workflow — definition, version, instance, node execution, timers.
+- ai — agent runs, plans, tool calls, approvals.
+- integration — connectors, webhooks, notifications, audit events, read models.
 
 ## Current milestone
 
-M1 — Distributed skeleton
+P0 — Pivot & re-foundation
 
 ## Current brick
 
-M1.2 — Workspace project endpoints
+P0.1 — Reset planning source of truth and project identity
 
-## Completed
+## Reused from the previous foundation (still valid)
 
-- [x] Verified the Node.js, pnpm, Docker and Docker Compose toolchain.
-- [x] Recorded ADR-001 through ADR-008.
-- [x] Configured the pnpm workspace and pinned toolchain versions.
-- [x] Added strict TypeScript and a buildable contracts package.
-- [x] Configured Turborepo build, lint, typecheck, test and clean tasks.
-- [x] Added repository formatting and line-ending standards.
-- [x] Added typed ESLint rules with Prettier compatibility.
-- [x] Added Vitest, V8 coverage and the first contracts smoke test.
-- [x] Separated test typechecking from production build output.
-- [x] Added Zod-backed health and public error contracts with unit tests.
-- [x] Added local PostgreSQL and Redis infrastructure with health checks, isolated service database ownership and persistent named volumes.
-- [x] Added buildable Express health skeletons for Gateway, Workspace and Intelligence with shared contracts and unit tests.
-- [x] Added and verified GitHub Actions CI from a clean checkout.
+- [x] pnpm workspace, Turborepo, strict TypeScript, ESLint, Prettier, Vitest.
+- [x] GitHub Actions CI (format, lint, typecheck, test, build).
+- [x] Zod health + public error contracts (error model matches FlowPilot section 16.5).
+- [x] Express health skeleton (/health/live, /health/ready).
+- [x] Local PostgreSQL + Redis via Docker Compose.
 
-- [x] Added strict Zod contracts for creating and reading projects, with unit tests.
-- [x] Exported project contracts through the public entry point.
-- [x] Documented the project HTTP contract in docs/api.
+## To rework for FlowPilot (P0)
 
-## In progress
+- [ ] P0.2 Rewrite conflicting ADRs (004/006/007/008); add Kafka, outbox/inbox, JSONB, AI-guardrails, auth ADRs.
+- [ ] P0.3 Rename identity: package `flowpilot`, scope `@flowpilot/*`, DB names, README.
+- [ ] P0.4 Add Kafka (KRaft), MinIO, Mailpit to Docker Compose; fix DB init.
+- [ ] P0.5 Replace `project` contract with FlowPilot event envelope + first domain contracts.
 
-- [ ] Set up Prisma and the Workspace database Project model.
-- [ ] Implement POST /v1/projects and GET /v1/projects/:id in Workspace Service.
-- [ ] Cover the endpoints with integration tests.
+## Pivot roadmap (compressed)
+
+- P0 Pivot & re-foundation.
+- P1 Platform core — identity, tenant/RBAC, metadata/form.
+- P2 Distributed workflow — Kafka, outbox/inbox, workflow engine, case/task, BullMQ/SLA.
+- P3 AI automation — tool registry, dry-run, approval, audit, evaluation.
+- P4 Product & hardening — Next.js UX, 3 templates, observability, load/security tests, report.
 
 ## Blockers
 
 None.
-
-## Pending decisions
-
-None for M0.
-
-## M0 exit gate
-
-- [x] Monorepo installs from the lockfile.
-- [x] Format, lint, typecheck, unit tests and build pass.
-- [x] Gateway, Workspace and Intelligence health endpoints respond.
-- [x] PostgreSQL and Redis containers are healthy.
-
-## M1 exit gate
-
-- [ ] A fake analysis event travels through the distributed flow end-to-end.
-- [ ] Workspace and Intelligence persist data only in their own databases.
-- [ ] Duplicate events do not create duplicate business results.
-- [ ] Integration tests prove the main distributed flow.
