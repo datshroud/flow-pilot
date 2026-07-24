@@ -1,7 +1,8 @@
 # ADR-004: Use Minimal Microservices
 
 - Status: Accepted
-- Date: 2026-07-13
+- Date: 2026-07-24
+- Supersedes: ADR-004
 
 ## Context
 
