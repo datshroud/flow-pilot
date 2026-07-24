@@ -1,6 +1,6 @@
 # ADR-006: Process Analysis Asynchronously
 
-- Status: Accepted
+- Status: Superseded by ADR-010
 - Date: 2026-07-13
 
 ## Context
