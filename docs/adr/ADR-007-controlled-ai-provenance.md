@@ -1,6 +1,6 @@
 # ADR-007: Capture Provenance Through a Controlled AI Panel
 
-- Status: Accepted
+- Status: Superseded by ADR-012
 - Date: 2026-07-13
 
 ## Context

@@ -1,6 +1,6 @@
 # ADR-008: Adopt Local-First and Privacy-First Data Handling
 
-- Status: Accepted
+- Status: Superseded by ADR-012
 - Date: 2026-07-13
 
 ## Context
