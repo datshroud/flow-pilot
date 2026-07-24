@@ -41,7 +41,7 @@ importers:
 
   apps/gateway:
     dependencies:
-      '@cognitive-guard/contracts':
+      '@flowpilot/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
       express:
@@ -63,7 +63,7 @@ importers:
 
   apps/intelligence-api:
     dependencies:
-      '@cognitive-guard/contracts':
+      '@flowpilot/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
       express:
@@ -85,7 +85,7 @@ importers:
 
   apps/workspace-service:
     dependencies:
-      '@cognitive-guard/contracts':
+      '@flowpilot/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
       express:

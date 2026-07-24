@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { healthRespSchema, type HealthResp } from '@cognitive-guard/contracts';
+import { healthRespSchema, type HealthResp } from '@flowpilot/contracts';
 import { describe, it, expect } from 'vitest';
 import { createApp } from '../src/app.js';
 

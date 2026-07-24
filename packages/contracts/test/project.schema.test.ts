@@ -5,15 +5,15 @@ import {
 } from '../src/project.schema.js';
 
 const validCreateProjectRequest = {
-  name: 'cognitive-guard',
-  repositoryUri: 'https://github.com/datshroud/cognitive-guard.git',
+  name: 'flowpilot',
+  repositoryUri: 'https://github.com/datshroud/flowpilot.git',
   language: 'typescript',
 };
 
 describe('createProjectRequestSchema', () => {
   it('accepts a minimal valid payload without repositoryUri', () => {
     const res = createProjectRequestSchema.safeParse({
-      name: 'cognitive-guard',
+      name: 'flowpilot',
       language: 'typescript',
     });
     expect(res.success).toBe(true);

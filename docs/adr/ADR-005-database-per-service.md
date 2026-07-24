@@ -2,6 +2,9 @@
 
 - Status: Accepted
 - Date: 2026-07-13
+- Note (2026-07-24): the concrete service and database names below refer to
+  the retired Cognitive Guard topology. The principle applies unchanged to
+  the FlowPilot catalog in ADR-009.
 
 ## Context
 

@@ -5,7 +5,7 @@ Date: 2026-07-21
 Source: blueprint §11.2 (endpoint list), §10.1 (Project table), §9 (conventions)
 
 The Gateway exposes these endpoints under `/v1`. Payloads are validated with
-the Zod schemas in `@cognitive-guard/contracts`.
+the Zod schemas in `@flowpilot/contracts`.
 
 ## Create a project
 

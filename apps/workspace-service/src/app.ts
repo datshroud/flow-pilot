@@ -1,5 +1,5 @@
 import express, { type Express } from 'express';
-import { healthRespSchema, type HealthResp } from '@cognitive-guard/contracts';
+import { healthRespSchema, type HealthResp } from '@flowpilot/contracts';
 
 export type ReadinessCheck = () => boolean | Promise<boolean>;
 

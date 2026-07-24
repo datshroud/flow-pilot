@@ -50,7 +50,7 @@ state without events or events without state.
 - New consumers (audit, analytics, notifications) attach without
   touching producers.
 - Events are durable and replayable; read models can be rebuilt.
-- Exactly-once *effects* are achieved at the database layer without
+- Exactly-once _effects_ are achieved at the database layer without
   pretending the transport is exactly-once.
 
 ### Negative

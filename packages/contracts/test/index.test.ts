@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-describe('@cognitive-guard/contracts', () => {
+describe('@flowpilot/contracts', () => {
   it('exports its public contracts', async () => {
     const contracts = await import('../src/index.js');
 

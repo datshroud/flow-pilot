@@ -15,12 +15,12 @@ export default defineConfig(
     '**/test-results/',
   ]),
   {
-    name: 'cognitive-guard/javascript',
+    name: 'flowpilot/javascript',
     files: ['**/*.{js,cjs,mjs,jsx}'],
     extends: [js.configs.recommended],
   },
   {
-    name: 'cognitive-guard/typescript',
+    name: 'flowpilot/typescript',
     files: ['**/*.{ts,cts,mts,tsx}'],
     extends: [
       js.configs.recommended,

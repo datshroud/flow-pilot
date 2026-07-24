@@ -24,7 +24,7 @@ P0 — Pivot & re-foundation
 
 ## Current brick
 
-P0.1 — Reset planning source of truth and project identity
+P0.4 — Infrastructure: Kafka, MinIO, Mailpit, DB provisioning.
 
 ## Reused from the previous foundation (still valid)
 
@@ -36,8 +36,8 @@ P0.1 — Reset planning source of truth and project identity
 
 ## To rework for FlowPilot (P0)
 
-- [ ] P0.2 Rewrite conflicting ADRs (004/006/007/008); add Kafka, outbox/inbox, JSONB, AI-guardrails, auth ADRs.
-- [ ] P0.3 Rename identity: package `flowpilot`, scope `@flowpilot/*`, DB names, README.
+- [x] P0.2 Rewrite conflicting ADRs (004/006/007/008); add Kafka, outbox/inbox, JSONB, AI-guardrails, auth ADRs.
+- [x] P0.3 Rename identity: package `flowpilot`, scope `@flowpilot/*`, DB names, README.
 - [ ] P0.4 Add Kafka (KRaft), MinIO, Mailpit to Docker Compose; fix DB init.
 - [ ] P0.5 Replace `project` contract with FlowPilot event envelope + first domain contracts.
 
