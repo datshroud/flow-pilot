@@ -1,4 +1,5 @@
 create role identity with login password 'identity';
+alter role identity createdb;
 
 create database flowpilot_identity
     with owner = identity
@@ -9,6 +10,7 @@ revoke all on database flowpilot_identity from public;
 grant connect on database flowpilot_identity to identity;
 
 create role platform with login password 'platform';
+alter role platform createdb;
 
 create database flowpilot_platform
     with owner = platform
@@ -19,6 +21,7 @@ revoke all on database flowpilot_platform from public;
 grant connect on database flowpilot_platform to platform;
 
 create role workflow with login password 'workflow';
+alter role workflow createdb;
 
 create database flowpilot_workflow
     with owner = workflow
@@ -29,6 +32,7 @@ revoke all on database flowpilot_workflow from public;
 grant connect on database flowpilot_workflow to workflow;
 
 create role ai with login password 'ai';
+alter role ai createdb;
 
 create database flowpilot_ai
     with owner = ai
@@ -39,6 +43,7 @@ revoke all on database flowpilot_ai from public;
 grant connect on database flowpilot_ai to ai;
 
 create role integration with login password 'integration';
+alter role integration createdb;
 
 create database flowpilot_integration
     with owner = integration
@@ -47,3 +52,4 @@ create database flowpilot_integration
 
 revoke all on database flowpilot_integration from public;
 grant connect on database flowpilot_integration to integration;
+
