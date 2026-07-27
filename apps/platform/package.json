@@ -1,5 +1,5 @@
 {
-  "name": "@flowpilot/workspace-service",
+  "name": "@flowpilot/platform",
   "version": "0.0.0",
   "private": true,
   "type": "module",

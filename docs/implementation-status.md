@@ -24,7 +24,7 @@ P1 — Platform core
 
 ## Current brick
 
-P1.1 — To be planned
+P1.1 — Identity: Prisma + User/Tenant models
 
 ## Reused from the previous foundation (still valid)
 
