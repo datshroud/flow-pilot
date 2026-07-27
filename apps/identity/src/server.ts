@@ -1,7 +1,40 @@
 import { createApp } from './app.js';
+import { loadConfig } from './config.js';
+import { createPrismaClient } from './prisma.js';
 
-const port = Number.parseInt(process.env['IDENTITY_PORT'] ?? '4101', 10);
+try {
+  process.loadEnvFile();
+} catch {
+  // no local .env file
+}
 
-createApp().listen(port, () => {
-  console.log('Workspace service listening on port', port);
+const config = loadConfig();
+const prisma = createPrismaClient(config.databaseUrl);
+
+const app = createApp({
+  isReady: async () => {
+    await prisma.$queryRaw`select 1`;
+    return true;
+  },
+});
+
+const server = app.listen(config.port, () => {
+  console.log('Identity service listening on port', config.port);
+});
+
+const shutdown = (signal: string): void => {
+  console.log('Shutting down on', signal);
+  server.close(() => {
+    void prisma.$disconnect().then(() => {
+      process.exit(0);
+    });
+  });
+};
+
+process.on('SIGTERM', () => {
+  shutdown('SIGTERM');
+});
+
+process.on('SIGINT', () => {
+  shutdown('SIGINT');
 });

@@ -36,7 +36,7 @@ describe('registerRequestSchema', () => {
     };
     expect(registerRequestSchema.safeParse(res).success).toBe(false);
   });
-    it('rejects a password longer than 128 characters', () => {
+  it('rejects a password longer than 128 characters', () => {
     const res = {
       ...validRegReq,
       password: 'a'.repeat(129),

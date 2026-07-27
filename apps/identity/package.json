@@ -10,12 +10,17 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "clean": "tsc --build tsconfig.build.json --clean"
+    "clean": "tsc --build tsconfig.build.json --clean",
+    "generate": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@flowpilot/contracts": "workspace:*",
+    "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.9.0",
-    "express": "5.2.1"
+    "@prisma/client-runtime-utils": "^7.9.0",
+    "express": "5.2.1",
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@types/express": "5.0.6",
