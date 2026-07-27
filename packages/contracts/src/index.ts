@@ -7,6 +7,11 @@ export {
   eventEnvelopeSchema,
   createEventEnvelopeSchema,
 } from './event-envelope.schema.js';
+export {
+  userStatusSchema,
+  userResponseSchema,
+  registerRequestSchema,
+} from './auth.schema.js';
 
 export type { HealthResp, HealthStatus } from './health.schema.js';
 export type { ErrorEnvelope, PublicError } from './error.schema.js';
@@ -16,3 +21,8 @@ export type {
   EventAggregate,
   EventEnvelope,
 } from './event-envelope.schema.js';
+export type {
+  UserResponse,
+  UserStatus,
+  RegisterRequest,
+} from './auth.schema.js';
