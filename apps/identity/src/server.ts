@@ -1,6 +1,8 @@
 import { createApp } from './app.js';
 import { loadConfig } from './config.js';
 import { createPrismaClient } from './prisma.js';
+import { argon2PasswordHasher } from './users/infrastructure/argon2-password-hasher.js';
+import { createPrismaUserRepository } from './users/infrastructure/prisma-user-repository.js';
 
 try {
   process.loadEnvFile();
@@ -12,6 +14,8 @@ const config = loadConfig();
 const prisma = createPrismaClient(config.databaseUrl);
 
 const app = createApp({
+  users: createPrismaUserRepository(prisma),
+  hasher: argon2PasswordHasher,
   isReady: async () => {
     await prisma.$queryRaw`select 1`;
     return true;

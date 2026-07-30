@@ -1,40 +1,10 @@
 import {
   EmailAlreadyRegisteredError,
-  type NewUser,
-  type PasswordHasher,
-  type StoredUser,
   type UserRepository,
 } from '../../src/users/domain/ports.js';
 import { describe, it, expect } from 'vitest';
 import { registerUser } from '../../src/users/application/register-user.js';
-
-const createFakeHasher = () => {
-  const calls: string[] = [];
-  const hasher: PasswordHasher = {
-    hash: (plainPassword) => {
-      calls.push(plainPassword);
-      return Promise.resolve('$argon2id$v=19$fake');
-    },
-  };
-  return { hasher, calls };
-};
-
-const createFakeRepository = () => {
-  const saved: NewUser[] = [];
-  const users: UserRepository = {
-    create: (user) => {
-      saved.push(user);
-      return Promise.resolve({
-        id: 'usr_1',
-        email: user.email,
-        displayName: user.displayName,
-        status: 'ACTIVE',
-        createdAt: new Date('2026-07-27T10:00:00.000Z'),
-      } satisfies StoredUser);
-    },
-  };
-  return { users, saved };
-};
+import { createFakeHasher, createFakeRepository } from '../helpers/fakes.js';
 
 const input = {
   email: 'test@gmail.com',

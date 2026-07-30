@@ -1,14 +1,22 @@
 import request from 'supertest';
 import { healthRespSchema, type HealthResp } from '@flowpilot/contracts';
 import { describe, it, expect } from 'vitest';
-import { createApp } from '../src/app.js';
+import { createApp, type ReadinessCheck } from '../src/app.js';
+import { createFakeHasher, createFakeRepository } from './helpers/fakes.js';
+
+const createTestApp = (isReady?: ReadinessCheck) =>
+  createApp({
+    users: createFakeRepository().users,
+    hasher: createFakeHasher().hasher,
+    ...(isReady === undefined ? {} : { isReady }),
+  });
 
 const parseHealthBody = (body: unknown): HealthResp =>
   healthRespSchema.parse(body);
 
 describe('Workspace service health routes', () => {
   it('returns a healthy liveness resp', async () => {
-    const resp = await request(createApp()).get('/health/live');
+    const resp = await request(createTestApp()).get('/health/live');
     expect(resp.status).toBe(200);
 
     const body: unknown = resp.body;
@@ -16,16 +24,14 @@ describe('Workspace service health routes', () => {
   });
 
   it('returns ready by default', async () => {
-    const resp = await request(createApp()).get('/health/ready');
+    const resp = await request(createTestApp()).get('/health/ready');
     expect(resp.status).toBe(200);
     const body: unknown = resp.body;
     expect(parseHealthBody(body)).toEqual({ status: 'ok' });
   });
 
   it('returns degraded when readiness is false', async () => {
-    const resp = await request(createApp({ isReady: () => false })).get(
-      '/health/ready',
-    );
+    const resp = await request(createTestApp(() => false)).get('/health/ready');
     expect(resp.status).toBe(503);
     const body: unknown = resp.body;
     expect(parseHealthBody(body)).toEqual({ status: 'degraded' });
@@ -33,10 +39,8 @@ describe('Workspace service health routes', () => {
 
   it('returns degraded when readiness check throws', async () => {
     const resp = await request(
-      createApp({
-        isReady: () => {
-          throw new Error('dependency unavailable');
-        },
+      createTestApp(() => {
+        throw new Error('dependency unavailable');
       }),
     ).get('/health/ready');
     expect(resp.status).toBe(503);
