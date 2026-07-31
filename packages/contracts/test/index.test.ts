@@ -12,5 +12,7 @@ describe('@flowpilot/contracts', () => {
     expect(contracts.eventEnvelopeSchema).toBeDefined();
     expect(contracts.registerRequestSchema).toBeDefined();
     expect(contracts.userResponseSchema).toBeDefined();
+    expect(contracts.loginRequestSchema).toBeDefined();
+    expect(contracts.accessTokenResponseSchema).toBeDefined();
   });
 });

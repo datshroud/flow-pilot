@@ -16,6 +16,20 @@ export const userResponseSchema = z.strictObject({
   createdAt: z.iso.datetime(),
 });
 
+export const loginRequestSchema = z.strictObject({
+  email: z.email().trim().toLowerCase().max(254),
+  password: z.string().min(1).max(128),
+});
+
+export const accessTokenResponseSchema = z.strictObject({
+  accessToken: z.string().min(1),
+  tokenType: z.literal('Bearer'),
+  expiresIn: z.number().int().positive(),
+});
+
 export type UserStatus = z.infer<typeof userStatusSchema>;
 export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 export type UserResponse = z.infer<typeof userResponseSchema>;
+
+export type LoginRequest = z.infer<typeof loginRequestSchema>;
+export type AccessTokenResponse = z.infer<typeof accessTokenResponseSchema>;

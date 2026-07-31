@@ -11,6 +11,8 @@ export {
   userStatusSchema,
   userResponseSchema,
   registerRequestSchema,
+  loginRequestSchema,
+  accessTokenResponseSchema,
 } from './auth.schema.js';
 
 export type { HealthResp, HealthStatus } from './health.schema.js';
@@ -25,4 +27,6 @@ export type {
   UserResponse,
   UserStatus,
   RegisterRequest,
+  LoginRequest,
+  AccessTokenResponse,
 } from './auth.schema.js';
