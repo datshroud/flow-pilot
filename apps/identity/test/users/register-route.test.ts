@@ -8,6 +8,7 @@ import { createFakeHasher, createFakeRepository } from '../helpers/fakes.js';
 import request from 'supertest';
 import { expect } from 'vitest';
 import { errorEnvelopeSchema, userResponseSchema } from '@flowpilot/contracts';
+import { fakePublicJwk } from '../health.test.js';
 
 const validBody = {
   email: 'ada@example.com',
@@ -16,7 +17,11 @@ const validBody = {
 };
 
 const appWith = (users: UserRepository) =>
-  createApp({ users, hasher: createFakeHasher().hasher });
+  createApp({
+    users,
+    hasher: createFakeHasher().hasher,
+    publicJwk: fakePublicJwk,
+  });
 
 describe('POST /v1/auth/register', () => {
   it('creates a user and returns 201', async () => {

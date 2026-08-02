@@ -1,4 +1,5 @@
 import { createApp } from './app.js';
+import { loadSigningKey } from './auth/infrastructure/signing-key.js';
 import { loadConfig } from './config.js';
 import { createPrismaClient } from './prisma.js';
 import { argon2PasswordHasher } from './users/infrastructure/argon2-password-hasher.js';
@@ -11,11 +12,13 @@ try {
 }
 
 const config = loadConfig();
+const signingKey = await loadSigningKey(config.jwtPrivateKey);
 const prisma = createPrismaClient(config.databaseUrl);
 
 const app = createApp({
   users: createPrismaUserRepository(prisma),
   hasher: argon2PasswordHasher,
+  publicJwk: signingKey.publicJwk,
   isReady: async () => {
     await prisma.$queryRaw`select 1`;
     return true;

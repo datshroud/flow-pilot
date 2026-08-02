@@ -4,12 +4,15 @@ import type { PasswordHasher, UserRepository } from './users/domain/ports.js';
 import { requestId } from './http/request-id.js';
 import { createRegisterHandler } from './users/interfaces/http/register.handler.js';
 import { errorHandler, notFoundHandler } from './http/error-handler.js';
+import type { JWK } from 'jose';
+import { createJwksHandler } from './http/jwks.handler.js';
 
 export type ReadinessCheck = () => boolean | Promise<boolean>;
 
 export interface AppDeps {
   readonly users: UserRepository;
   readonly hasher: PasswordHasher;
+  readonly publicJwk: JWK;
   readonly isReady?: ReadinessCheck;
 }
 
@@ -19,6 +22,7 @@ const createHealthResp = (status: HealthResp['status']): HealthResp =>
 export const createApp = ({
   users,
   hasher,
+  publicJwk,
   isReady: readinessCheck = () => true,
 }: AppDeps): Express => {
   const app = express();
@@ -41,6 +45,8 @@ export const createApp = ({
   });
 
   app.post('/v1/auth/register', createRegisterHandler({ users, hasher }));
+
+  app.get('/.well-known/jwks.json', createJwksHandler(publicJwk));
 
   app.use(notFoundHandler);
   app.use(errorHandler);

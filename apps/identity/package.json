@@ -13,6 +13,7 @@
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "clean": "tsc --build tsconfig.build.json --clean",
     "generate": "prisma generate",
+    "generate:jwt-key": "node scripts/generate-jwt-key.mjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {

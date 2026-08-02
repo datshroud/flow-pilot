@@ -5,6 +5,8 @@ const validEnv = {
   IDENTITY_DATABASE_URL:
     'postgresql://identity:identity@localhost:5433/flowpilot_identity',
   IDENTITY_PORT: '4101',
+
+  IDENTITY_JWT_PRIVATE_KEY: 'ZmFrZS1rZXk=',
 };
 
 describe('loadConfig', () => {
@@ -12,11 +14,16 @@ describe('loadConfig', () => {
     expect(loadConfig(validEnv)).toEqual({
       databaseUrl: validEnv.IDENTITY_DATABASE_URL,
       port: 4101,
+      jwtPrivateKey: 'ZmFrZS1rZXk=',
+      jwtIssuer: 'flowpilot-identity',
+      jwtAudience: 'flowpilot',
+      accessTokenTtlSeconds: 900,
     });
   });
   it('defaults the port when it is not set', () => {
     const res = loadConfig({
       IDENTITY_DATABASE_URL: validEnv.IDENTITY_DATABASE_URL,
+      IDENTITY_JWT_PRIVATE_KEY: validEnv.IDENTITY_JWT_PRIVATE_KEY,
     });
     expect(res.port).toEqual(4101);
   });
