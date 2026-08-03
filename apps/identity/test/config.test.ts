@@ -18,6 +18,7 @@ describe('loadConfig', () => {
       jwtIssuer: 'flowpilot-identity',
       jwtAudience: 'flowpilot',
       accessTokenTtlSeconds: 900,
+      refreshTokenTtlSeconds: 2592000,
     });
   });
   it('defaults the port when it is not set', () => {

@@ -12,6 +12,12 @@ const configSchema = z.object({
     .int()
     .positive()
     .default(900),
+
+  IDENTITY_REFRESH_TOKEN_TTL_SECONDS: z.coerce
+    .number()
+    .int()
+    .positive()
+    .default(2_592_000),
 });
 
 export interface Config {
@@ -22,6 +28,7 @@ export interface Config {
   readonly jwtIssuer: string;
   readonly jwtAudience: string;
   readonly accessTokenTtlSeconds: number;
+  readonly refreshTokenTtlSeconds: number;
 }
 
 export const loadConfig = (env: NodeJS.ProcessEnv = process.env): Config => {
@@ -41,5 +48,6 @@ export const loadConfig = (env: NodeJS.ProcessEnv = process.env): Config => {
     jwtIssuer: res.data.IDENTITY_JWT_ISSUER,
     jwtAudience: res.data.IDENTITY_JWT_AUDIENCE,
     accessTokenTtlSeconds: res.data.IDENTITY_ACCESS_TOKEN_TTL_SECONDS,
+    refreshTokenTtlSeconds: res.data.IDENTITY_REFRESH_TOKEN_TTL_SECONDS,
   };
 };
