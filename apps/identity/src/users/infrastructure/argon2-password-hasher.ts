@@ -1,4 +1,4 @@
-import { hash } from '@node-rs/argon2';
+import { hash, verify } from '@node-rs/argon2';
 import type { PasswordHasher } from '../domain/ports.js';
 
 const hashOptions = {
@@ -10,4 +10,7 @@ const hashOptions = {
 export const argon2PasswordHasher: PasswordHasher = {
   hash: (plainPassword: string): Promise<string> =>
     hash(plainPassword, hashOptions),
+
+  verify: (passwordHash: string, plainPassword: string): Promise<boolean> =>
+    verify(passwordHash, plainPassword),
 };

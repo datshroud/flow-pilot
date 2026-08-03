@@ -2,7 +2,7 @@ import request from 'supertest';
 import { healthRespSchema, type HealthResp } from '@flowpilot/contracts';
 import { describe, it, expect } from 'vitest';
 import { createApp, type ReadinessCheck } from '../src/app.js';
-import { createFakeHasher, createFakeRepository } from './helpers/fakes.js';
+import { buildTestAppDeps } from './helpers/fakes.js';
 import type { JWK } from 'jose';
 
 export const fakePublicJwk: JWK = {
@@ -16,12 +16,7 @@ export const fakePublicJwk: JWK = {
 };
 
 const createTestApp = (isReady?: ReadinessCheck) =>
-  createApp({
-    users: createFakeRepository().users,
-    hasher: createFakeHasher().hasher,
-    publicJwk: fakePublicJwk,
-    ...(isReady === undefined ? {} : { isReady }),
-  });
+  createApp(buildTestAppDeps(isReady === undefined ? {} : { isReady }));
 
 const parseHealthBody = (body: unknown): HealthResp =>
   healthRespSchema.parse(body);

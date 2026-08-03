@@ -5,7 +5,7 @@ import {
   type SigningKey,
 } from '../../src/auth/infrastructure/signing-key.js';
 import { exportPKCS8, generateKeyPair } from 'jose';
-import { createFakeHasher, createFakeRepository } from '../helpers/fakes.js';
+import { buildTestAppDeps } from '../helpers/fakes.js';
 import { createApp } from '../../src/app.js';
 import request from 'supertest';
 
@@ -21,11 +21,7 @@ beforeAll(async () => {
 });
 
 const createTestApp = () =>
-  createApp({
-    users: createFakeRepository().users,
-    hasher: createFakeHasher().hasher,
-    publicJwk: signingKey.publicJwk,
-  });
+  createApp(buildTestAppDeps({ publicJwk: signingKey.publicJwk }));
 
 describe('GET /.well-known/jwks.json', () => {
   it('publishes the public key in JWKS format', async () => {

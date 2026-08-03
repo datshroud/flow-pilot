@@ -6,6 +6,8 @@ import { createRegisterHandler } from './users/interfaces/http/register.handler.
 import { errorHandler, notFoundHandler } from './http/error-handler.js';
 import type { JWK } from 'jose';
 import { createJwksHandler } from './http/jwks.handler.js';
+import type { TokenIssuer } from './auth/domain/ports.js';
+import { createLoginHandler } from './auth/interfaces/http/login.handler.js';
 
 export type ReadinessCheck = () => boolean | Promise<boolean>;
 
@@ -13,6 +15,7 @@ export interface AppDeps {
   readonly users: UserRepository;
   readonly hasher: PasswordHasher;
   readonly publicJwk: JWK;
+  readonly tokens: TokenIssuer;
   readonly isReady?: ReadinessCheck;
 }
 
@@ -23,6 +26,7 @@ export const createApp = ({
   users,
   hasher,
   publicJwk,
+  tokens,
   isReady: readinessCheck = () => true,
 }: AppDeps): Express => {
   const app = express();
@@ -45,6 +49,7 @@ export const createApp = ({
   });
 
   app.post('/v1/auth/register', createRegisterHandler({ users, hasher }));
+  app.post('/v1/auth/login', createLoginHandler({ users, hasher, tokens }));
 
   app.get('/.well-known/jwks.json', createJwksHandler(publicJwk));
 

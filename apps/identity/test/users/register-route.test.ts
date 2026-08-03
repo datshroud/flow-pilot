@@ -4,11 +4,10 @@ import {
   EmailAlreadyRegisteredError,
   type UserRepository,
 } from '../../src/users/domain/ports.js';
-import { createFakeHasher, createFakeRepository } from '../helpers/fakes.js';
+import { buildTestAppDeps, createFakeRepository } from '../helpers/fakes.js';
 import request from 'supertest';
 import { expect } from 'vitest';
 import { errorEnvelopeSchema, userResponseSchema } from '@flowpilot/contracts';
-import { fakePublicJwk } from '../health.test.js';
 
 const validBody = {
   email: 'ada@example.com',
@@ -17,11 +16,7 @@ const validBody = {
 };
 
 const appWith = (users: UserRepository) =>
-  createApp({
-    users,
-    hasher: createFakeHasher().hasher,
-    publicJwk: fakePublicJwk,
-  });
+  createApp(buildTestAppDeps({ users }));
 
 describe('POST /v1/auth/register', () => {
   it('creates a user and returns 201', async () => {
@@ -71,6 +66,7 @@ describe('POST /v1/auth/register', () => {
   it('returns 409 when the email is already registered', async () => {
     const users: UserRepository = {
       create: () => Promise.reject(new EmailAlreadyRegisteredError()),
+      findByEmail: () => Promise.resolve(null),
     };
     const resp = await request(appWith(users))
       .post('/v1/auth/register')
@@ -85,6 +81,7 @@ describe('POST /v1/auth/register', () => {
   it('returns 500 without leaking internal details', async () => {
     const users: UserRepository = {
       create: () => Promise.reject(new Error('connection string leaked here')),
+      findByEmail: () => Promise.resolve(null),
     };
     const resp = await request(appWith(users))
       .post('/v1/auth/register')

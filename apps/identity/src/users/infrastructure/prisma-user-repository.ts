@@ -3,6 +3,7 @@ import {
   EmailAlreadyRegisteredError,
   type NewUser,
   type StoredUser,
+  type UserCredentials,
   type UserRepository,
 } from '../domain/ports.js';
 
@@ -26,5 +27,16 @@ export const createPrismaUserRepository = (
       if (isUniqueViolation(err)) throw new EmailAlreadyRegisteredError();
       throw err;
     }
+  },
+
+  findByEmail: async (email: string): Promise<UserCredentials | null> => {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (user === null) return null;
+    return {
+      id: user.id,
+      email: user.email,
+      passwordHash: user.passwordHash,
+      status: user.status,
+    };
   },
 });

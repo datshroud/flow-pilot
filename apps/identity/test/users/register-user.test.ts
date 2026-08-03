@@ -42,6 +42,7 @@ describe('registerUser', () => {
     const { hasher } = createFakeHasher();
     const users: UserRepository = {
       create: () => Promise.reject(new EmailAlreadyRegisteredError()),
+      findByEmail: () => Promise.resolve(null),
     };
     await expect(registerUser({ users, hasher }, input)).rejects.toBeInstanceOf(
       EmailAlreadyRegisteredError,

@@ -1,4 +1,5 @@
 import { createApp } from './app.js';
+import { createJoseTokenIssuer } from './auth/infrastructure/jose-token-issuer.js';
 import { loadSigningKey } from './auth/infrastructure/signing-key.js';
 import { loadConfig } from './config.js';
 import { createPrismaClient } from './prisma.js';
@@ -15,10 +16,17 @@ const config = loadConfig();
 const signingKey = await loadSigningKey(config.jwtPrivateKey);
 const prisma = createPrismaClient(config.databaseUrl);
 
+const tokens = createJoseTokenIssuer(signingKey, {
+  issuer: config.jwtIssuer,
+  audience: config.jwtAudience,
+  ttlSeconds: config.accessTokenTtlSeconds,
+});
+
 const app = createApp({
   users: createPrismaUserRepository(prisma),
   hasher: argon2PasswordHasher,
   publicJwk: signingKey.publicJwk,
+  tokens,
   isReady: async () => {
     await prisma.$queryRaw`select 1`;
     return true;

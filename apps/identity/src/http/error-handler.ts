@@ -2,7 +2,10 @@ import { errorEnvelopeSchema, type ErrorEnvelope } from '@flowpilot/contracts';
 import type { ErrorRequestHandler, RequestHandler } from 'express';
 import { readRequestId } from './request-id.js';
 import { ZodError } from 'zod';
-import { EmailAlreadyRegisteredError } from '../users/domain/ports.js';
+import {
+  EmailAlreadyRegisteredError,
+  InvalidCredentialsError,
+} from '../users/domain/ports.js';
 
 const buildEnvelope = (
   code: string,
@@ -67,6 +70,13 @@ export const errorHandler: ErrorRequestHandler = (
       .json(buildEnvelope('EMAIL_ALREADY_REGISTERED', err.message, requestId));
     return;
   }
+  if (err instanceof InvalidCredentialsError) {
+    resp
+      .status(401)
+      .json(buildEnvelope('INVALID_CREDENTIALS', err.message, requestId));
+    return;
+  }
+
   console.error('Unhandled error', { requestId, err });
   resp
     .status(500)
