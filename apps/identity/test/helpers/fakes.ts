@@ -1,4 +1,9 @@
-import type { TokenIssuer } from '../../src/auth/domain/ports.js';
+import type {
+  RefreshTokenCodec,
+  RefreshTokenRepository,
+  StoredRefreshToken,
+  TokenIssuer,
+} from '../../src/auth/domain/ports.js';
 import type {
   NewUser,
   PasswordHasher,
@@ -88,3 +93,69 @@ export const buildTestAppDeps = (
   publicJwk: fakePublicJwk,
   ...overrides,
 });
+
+export const createFakeRefreshTokenRepository = (
+  seeded: StoredRefreshToken[] = [],
+): { refreshTokens: RefreshTokenRepository; rows: StoredRefreshToken[] } => {
+  const rows: StoredRefreshToken[] = [...seeded];
+  return {
+    rows,
+    refreshTokens: {
+      create: (token) => {
+        const stored: StoredRefreshToken = {
+          id: `rt_${String(rows.length + 1)}`,
+          ...token,
+          usedAt: null,
+          revokedAt: null,
+        };
+        rows.push(stored);
+        return Promise.resolve(stored);
+      },
+
+      findByTokenHash: (tokenHash) =>
+        Promise.resolve(
+          rows.find((row) => row.tokenHash === tokenHash) ?? null,
+        ),
+
+      markUsed: (id, when) => {
+        let idx = -1;
+        for (let i = 0; i < rows.length; i++)
+          if (rows[i]?.id === id && rows[i]?.usedAt === null) {
+            idx = i;
+            break;
+          }
+        const row = rows[idx];
+        if (row !== undefined) rows[idx] = { ...row, usedAt: when };
+        return Promise.resolve();
+      },
+
+      revokeFamily: (familyId, when) => {
+        rows.forEach((row, i) => {
+          if (row.familyId === familyId && row.revokedAt === null)
+            rows[i] = { ...row, revokedAt: when };
+        });
+        return Promise.resolve();
+      },
+    },
+  };
+};
+
+export const createFakeCodec = (): {
+  codec: RefreshTokenCodec;
+  generated: string[];
+} => {
+  const generated: string[] = [];
+  let cnt = 0;
+  return {
+    generated,
+    codec: {
+      generate: () => {
+        cnt++;
+        const token = `raw-token-${String(cnt)}`;
+        generated.push(token);
+        return token;
+      },
+      hash: (token) => `hashed(${token})`,
+    },
+  };
+};
