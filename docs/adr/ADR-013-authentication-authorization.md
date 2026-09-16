@@ -2,6 +2,10 @@
 
 - Status: Accepted
 - Date: 2026-07-24
+- Note (2026-09-17): unchanged by the helpdesk pivot and already
+  implemented. "The AI agent acts on behalf of users" now reads as: the
+  worker and the ml service act asynchronously and must carry the same
+  auditable tenant and actor context as a human request.
 
 ## Context
 

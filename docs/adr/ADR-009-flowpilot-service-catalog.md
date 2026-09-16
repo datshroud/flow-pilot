@@ -1,6 +1,6 @@
 # ADR-009: FlowPilot Service Catalog
 
-- Status: Accepted
+- Status: Superseded by ADR-015
 - Date: 2026-07-24
 - Supersedes: ADR-004
 

@@ -5,6 +5,11 @@
 - Note (2026-07-24): the concrete service and database names below refer to
   the retired Cognitive Guard topology. The principle applies unchanged to
   the FlowPilot catalog in ADR-009.
+- Note (2026-09-17): ADR-009 is superseded by ADR-015. The principle still
+  applies unchanged: identity and tickets each own a database, the gateway
+  owns none, and the ml service owns model artifacts and snapshots but no
+  business database (ADR-014). The worker shares the tickets database
+  because it is the same domain in a second process, not a second service.
 
 ## Context
 

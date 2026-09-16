@@ -1,6 +1,6 @@
 # ADR-012: Permission-aware AI Agent with Risk Tiers and Human Approval
 
-- Status: Accepted
+- Status: Superseded by ADR-017
 - Date: 2026-07-24
 - Supersedes: ADR-007, ADR-008
 

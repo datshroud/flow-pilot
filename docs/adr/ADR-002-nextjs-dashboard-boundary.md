@@ -2,6 +2,11 @@
 
 - Status: Accepted
 - Date: 2026-07-13
+- Note (2026-09-17): the decision holds unchanged for the helpdesk topic.
+  Read "Workspace and Intelligence" as the tickets service, and the
+  "Cognitive Debt formula" guardrail as: `apps/web` must not compute a
+  prediction, a similarity or an evaluation metric — those belong to the
+  ml service (ADR-014).
 
 ## Context
 

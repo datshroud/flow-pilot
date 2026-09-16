@@ -2,6 +2,11 @@
 
 - Status: Accepted
 - Date: 2026-07-13
+- Note (2026-09-17): the decision holds unchanged. The named services are
+  now those in ADR-015; the layering rules apply to the tickets service
+  as written. The ml service is FastAPI, not Express, and is governed by
+  ADR-014 — but its handlers are held to the same rule: the HTTP layer
+  adapts, it does not compute.
 
 ## Context
 

@@ -1,6 +1,6 @@
 # ADR-011: Hybrid JSONB Dynamic Records
 
-- Status: Accepted
+- Status: Withdrawn by ADR-015
 - Date: 2026-07-24
 
 ## Context

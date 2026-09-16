@@ -1,6 +1,6 @@
 # ADR-010: Kafka Event Backbone with Outbox/Inbox
 
-- Status: Accepted
+- Status: Superseded by ADR-016
 - Date: 2026-07-24
 - Supersedes: ADR-006
 

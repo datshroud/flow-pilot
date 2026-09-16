@@ -1,6 +1,6 @@
 # ADR-001: Use TypeScript End-to-End
 
-- Status: Accepted
+- Status: Superseded by ADR-014
 - Date: 2026-07-13
 
 ## Context
