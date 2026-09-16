@@ -6,7 +6,7 @@ import { createApp } from '../src/app.js';
 const parseHealthBody = (body: unknown): HealthResp =>
   healthRespSchema.parse(body);
 
-describe('Intelligence API health routes', () => {
+describe('Worker health routes', () => {
   it('returns a healthy liveness resp', async () => {
     const resp = await request(createApp()).get('/health/live');
     expect(resp.status).toBe(200);

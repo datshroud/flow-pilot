@@ -104,7 +104,29 @@ importers:
         specifier: 7.2.2
         version: 7.2.2
 
-  apps/platform:
+  apps/tickets:
+    dependencies:
+      '@flowpilot/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      express:
+        specifier: 5.2.1
+        version: 5.2.1
+    devDependencies:
+      '@types/express':
+        specifier: 5.0.6
+        version: 5.0.6
+      '@types/node':
+        specifier: 24.13.3
+        version: 24.13.3
+      '@types/supertest':
+        specifier: 7.2.1
+        version: 7.2.1
+      supertest:
+        specifier: 7.2.2
+        version: 7.2.2
+
+  apps/worker:
     dependencies:
       '@flowpilot/contracts':
         specifier: workspace:*
