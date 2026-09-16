@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Model artifacts and training snapshots never enter Git (ADR-017).
+# They live in a mounted volume and are referenced by checksum.
+artifacts/
+snapshots/
+*.joblib
+*.pkl

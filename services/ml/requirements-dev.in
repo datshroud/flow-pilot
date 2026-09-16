@@ -1,0 +1,13 @@
+# Direct development dependencies. Lower bounds only.
+#
+# Pins are generated into requirements-dev.txt:
+#
+#   pip-compile --no-header --strip-extras requirements-dev.in
+#
+-c requirements.txt
+pytest
+pytest-cov
+httpx2
+ruff
+mypy
+pip-tools

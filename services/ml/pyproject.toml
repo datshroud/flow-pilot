@@ -1,0 +1,58 @@
+[project]
+name = "flowpilot-ml"
+version = "0.0.0"
+description = "FlowPilot ML service: feature extraction, training, evaluation, inference."
+requires-python = ">=3.14"
+dynamic = ["dependencies", "optional-dependencies"]
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+optional-dependencies.dev = { file = ["requirements-dev.txt"] }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+src = ["src", "tests"]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "I",   # isort
+  "N",   # pep8-naming
+  "UP",  # pyupgrade
+  "B",   # bugbear
+  "SIM", # simplify
+  "S",   # bandit — security
+  "RUF",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# An assert is the point of a test, not a stripped-in-production check.
+"tests/**" = ["S101"]
+
+[tool.mypy]
+python_version = "3.14"
+packages = ["flowpilot_ml"]
+mypy_path = "src"
+strict = true
+warn_unreachable = true
+disallow_any_explicit = false
+
+# scikit-learn, pandas and numpy ship partial or absent stubs; their own
+# internals are not our contract surface.
+[[tool.mypy.overrides]]
+module = ["sklearn.*", "pandas.*", "joblib.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q --strict-markers --strict-config"

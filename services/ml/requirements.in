@@ -1,0 +1,17 @@
+# Direct runtime dependencies. Lower bounds only.
+#
+# ADR-014 requires exact pins at install time. The pins live in
+# requirements.txt, which is generated from this file — never edited by hand:
+#
+#   pip-compile --no-header --strip-extras requirements.in
+#
+# --no-header keeps the generating command and Python version out of the
+# output, so CI's drift check diffs dependencies rather than provenance.
+fastapi
+uvicorn[standard]
+pydantic
+scikit-learn
+pandas
+numpy
+scipy
+joblib
