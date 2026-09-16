@@ -5,6 +5,23 @@
 #dependencies
 node_modules/
 .pnpm-store/
+.venv/
+venv/
+
+# python caches and artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# model artifacts, training snapshots and downloaded datasets (ADR-017):
+# referenced by checksum, never committed
+var/
+data/raw/
+data/interim/
 
 # build artifact and caches
 dist/
