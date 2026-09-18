@@ -108,15 +108,54 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt -r requirements-dev.txt
           pip install -e . --no-deps
-
-      # --no-header keeps the output free of the generating command and
-      # Python version, so the diff reports real dependency drift only.
-      - name: Verify lockfiles are current
+          
+      # A recompile-and-diff check cannot work here. pip-tools 7.6 resolves for
+      # the platform it runs on, so a lockfile compiled on a Windows dev machine
+      # never matches one compiled on this Linux runner: pandas requires tzdata
+      # only on win32, and uvicorn[standard] requires uvloop only off it. A fresh
+      # resolve is also time-dependent — it picks up any patch released since.
+      # The mistake actually worth catching is adding a dependency to a .in file
+      # and forgetting to regenerate the lockfile, which needs no resolution.
+      - name: Verify every direct requirement is pinned
         run: |
-          pip-compile --no-header --strip-extras --quiet -o /tmp/requirements.txt requirements.in
-          pip-compile --no-header --strip-extras --quiet -o /tmp/requirements-dev.txt requirements-dev.in
-          diff -u requirements.txt /tmp/requirements.txt
-          diff -u requirements-dev.txt /tmp/requirements-dev.txt
+          python - <<'PY'
+          import re
+          import sys
+          from pathlib import Path
+
+
+          def declared(path: str) -> set[str]:
+              names = set()
+              for raw in Path(path).read_text().splitlines():
+                  line = raw.strip()
+                  if not line or line.startswith(("#", "-")):
+                      continue
+                  names.add(re.split(r"[\[<>=!;~ ]", line)[0].lower())
+              return names
+
+
+          def pinned(path: str) -> set[str]:
+              names = set()
+              for line in Path(path).read_text().splitlines():
+                  if line.startswith((" ", "#")) or "==" not in line:
+                      continue
+                  names.add(line.split("==")[0].strip().lower())
+              return names
+
+
+          failed = False
+          for stem in ("requirements", "requirements-dev"):
+              missing = sorted(declared(f"{stem}.in") - pinned(f"{stem}.txt"))
+              if missing:
+                  failed = True
+                  print(
+                      f"::error::{stem}.in declares {missing}, "
+                      f"but {stem}.txt does not pin them. Run pip-compile."
+                  )
+
+          sys.exit(1 if failed else 0)
+          PY
+
 
       - name: Lint
         run: ruff check .

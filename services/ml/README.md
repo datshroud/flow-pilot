@@ -70,3 +70,15 @@ application without binding a socket.
   notebook, the training job and online inference.
 - Training never happens in an HTTP request. Training is a BullMQ job
   (ADR-016) that calls this service; inference is online (ADR-017).
+
+  ### Known limitation: the lockfiles are platform-specific
+
+pip-tools 7.6 resolves for the platform it runs on, and it has no `--universal`
+mode. These lockfiles were compiled on Windows, so they carry `tzdata` (which
+pandas needs only on win32) and omit `uvloop` (which `uvicorn[standard]` needs
+only off it). They install correctly on Linux — uvicorn simply falls back to the
+asyncio event loop instead of uvloop.
+
+When the service gets a Dockerfile, regenerate the lockfiles inside that image
+so the pins match the platform the service actually runs on.
+
