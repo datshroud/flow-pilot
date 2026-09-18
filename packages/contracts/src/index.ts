@@ -14,6 +14,13 @@ export {
   loginRequestSchema,
   accessTokenResponseSchema,
 } from './auth.schema.js';
+export {
+  ticketStatusSchema,
+  ticketPrioritySchema,
+  ticketCategorySchema,
+  createTicketRequestSchema,
+  ticketResponseSchema,
+} from './ticket.schema.js';
 
 export type { HealthResp, HealthStatus } from './health.schema.js';
 export type { ErrorEnvelope, PublicError } from './error.schema.js';
@@ -30,3 +37,10 @@ export type {
   LoginRequest,
   AccessTokenResponse,
 } from './auth.schema.js';
+export type {
+  TicketStatus,
+  TicketPriority,
+  TicketCategory,
+  CreateTicketRequest,
+  TicketResponse,
+} from './ticket.schema.js';
