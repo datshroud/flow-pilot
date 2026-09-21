@@ -23,5 +23,10 @@ describe('@flowpilot/contracts', () => {
     expect(contracts.confidenceSchema).toBeDefined();
     expect(contracts.duplicateCandidateSchema).toBeDefined();
     expect(contracts.predictionResultSchema).toBeDefined();
+    expect(contracts.predictRequestSchema).toBeDefined();
+    expect(contracts.predictionFailureReasonSchema).toBeDefined();
+    expect(contracts.predictionFailureSchema).toBeDefined();
+    expect(contracts.predictionSchema).toBeDefined();
+    expect(contracts.predictResponseSchema).toBeDefined();
   });
 });

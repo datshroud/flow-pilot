@@ -3,6 +3,8 @@ import {
   confidenceSchema,
   predictionResultSchema,
   predictionTaskSchema,
+  predictRequestSchema,
+  predictResponseSchema,
   type PredictionTask,
 } from '../src/prediction.schema.js';
 
@@ -47,6 +49,33 @@ const validEscalationRisk = {
   confidence: validConfidence,
   threshold: 0.31,
   willEscalate: true,
+};
+
+const validPredictReq = {
+  tenantId: 'ten_1',
+  correlationId: 'cor_1',
+  subject: 'Cannot log in after password reset',
+  body: 'I reset my password this morning and the login page rejects it.',
+  requestedPriority: 'HIGH',
+  excludeTicketId: null,
+  tasks: ['CATEGORY', 'PRIORITY'],
+};
+
+const validPredictResp = {
+  correlationId: 'cor_1',
+  predictions: [
+    {
+      modelVersionId: 'mv_1',
+      latencyMs: 12,
+      result: validCategory,
+    },
+    {
+      modelVersionId: 'mv_2',
+      latencyMs: 8,
+      result: validPriority,
+    },
+  ],
+  failures: [],
 };
 
 describe('predictResultSchema', () => {
@@ -152,22 +181,22 @@ describe('predictResultSchema', () => {
     const result = { ...validTopic, distance: -0.1 };
     expect(predictionResultSchema.safeParse(result).success).toBe(false);
   });
-    it('covers every task declared in predictionTaskSchema', () => {
-        const fixtures: Record<PredictionTask, unknown> = {
-            CATEGORY: validCategory,
-            PRIORITY: validPriority,
-            RESOLUTION_TIME: validResolutionTime,
-            DUPLICATE: validDuplicate,
-            TOPIC: validTopic,
-            ESCALATION_RISK: validEscalationRisk,
-        };
+  it('covers every task declared in predictionTaskSchema', () => {
+    const fixtures: Record<PredictionTask, unknown> = {
+      CATEGORY: validCategory,
+      PRIORITY: validPriority,
+      RESOLUTION_TIME: validResolutionTime,
+      DUPLICATE: validDuplicate,
+      TOPIC: validTopic,
+      ESCALATION_RISK: validEscalationRisk,
+    };
 
-        for (const task of predictionTaskSchema.options) {
-            expect(predictionResultSchema.safeParse(fixtures[task]).success).toBe(
-                true,
-            );
-        }
-    });
+    for (const task of predictionTaskSchema.options) {
+      expect(predictionResultSchema.safeParse(fixtures[task]).success).toBe(
+        true,
+      );
+    }
+  });
 });
 
 describe('confidenceSchema', () => {
@@ -193,5 +222,152 @@ describe('confidenceSchema', () => {
   it('rejects a negative value', () => {
     const confidence = { ...validConfidence, value: -0.1 };
     expect(confidenceSchema.safeParse(confidence).success).toBe(false);
+  });
+});
+
+describe('predictRequestSchema', () => {
+  it('accepts a valid request', () => {
+    expect(predictRequestSchema.safeParse(validPredictReq).success).toBe(true);
+  });
+  it('accepts a request asking for a single task', () => {
+    const req = {
+      ...validPredictReq,
+      tasks: ['DUPLICATE'],
+    };
+    expect(predictRequestSchema.safeParse(req).success).toBe(true);
+  });
+  it('accepts a null requestedPriority', () => {
+    const req = {
+      ...validPredictReq,
+      requestedPriority: null,
+    };
+    expect(predictRequestSchema.safeParse(req).success).toBe(true);
+  });
+  it('accepts an excludeTicketId for rescoring', () => {
+    const req = {
+      ...validPredictReq,
+      excludeTicketId: 'tkt_4',
+    };
+    expect(predictRequestSchema.safeParse(req).success).toBe(true);
+  });
+  it('rejects an empty tasks array', () => {
+    const req = { ...validPredictReq, tasks: [] };
+    expect(predictRequestSchema.safeParse(req).success).toBe(false);
+  });
+
+  it('rejects repeated tasks', () => {
+    const req = { ...validPredictReq, tasks: ['CATEGORY', 'CATEGORY'] };
+    expect(predictRequestSchema.safeParse(req).success).toBe(false);
+  });
+
+  it('rejects an unknown task', () => {
+    const req = { ...validPredictReq, tasks: ['SENTIMENT'] };
+    expect(predictRequestSchema.safeParse(req).success).toBe(false);
+  });
+
+  it('rejects an empty tenantId', () => {
+    const req = { ...validPredictReq, tenantId: '' };
+    expect(predictRequestSchema.safeParse(req).success).toBe(false);
+  });
+
+  it('rejects a subject of only whitespace', () => {
+    const req = { ...validPredictReq, subject: '   ' };
+    expect(predictRequestSchema.safeParse(req).success).toBe(false);
+  });
+
+  it('rejects a smuggled ticketId', () => {
+    const req = { ...validPredictReq, ticketId: 'tkt_1' };
+    expect(predictRequestSchema.safeParse(req).success).toBe(false);
+  });
+});
+
+describe('predictResponseSchema', () => {
+  it('accepts a response where every task succeeded', () => {
+    expect(predictResponseSchema.safeParse(validPredictResp).success).toBe(
+      true,
+    );
+  });
+  it('accepts a partial response mixing results and failures', () => {
+    const resp = {
+      ...validPredictResp,
+      failures: [
+        {
+          task: 'RESOLUTION_TIME',
+          reason: 'NO_ACTIVE_MODEL',
+        },
+      ],
+    };
+    expect(predictResponseSchema.safeParse(resp).success).toBe(true);
+  });
+  it('accepts a response where every task failed', () => {
+    const resp = {
+      correlationId: 'cor_1',
+      predictions: [],
+      failures: [
+        {
+          task: 'RESOLUTION_TIME',
+          reason: 'NO_ACTIVE_MODEL',
+        },
+        {
+          task: 'PRIORITY',
+          reason: 'TIMEOUT',
+        },
+      ],
+    };
+    expect(predictResponseSchema.safeParse(resp).success).toBe(true);
+  });
+  it('rejects a task appearing in both predictions and failures', () => {
+    const resp = {
+      ...validPredictResp,
+      failures: [{ task: 'CATEGORY', reason: 'TIMEOUT' }],
+    };
+    expect(predictResponseSchema.safeParse(resp).success).toBe(false);
+  });
+
+  it('rejects the same task predicted twice', () => {
+    const resp = {
+      ...validPredictResp,
+      predictions: [
+        { modelVersionId: 'mv_1', latencyMs: 12, result: validCategory },
+        { modelVersionId: 'mv_9', latencyMs: 30, result: validCategory },
+      ],
+    };
+    expect(predictResponseSchema.safeParse(resp).success).toBe(false);
+  });
+
+  it('rejects a prediction without a model version', () => {
+    const resp = {
+      ...validPredictResp,
+      predictions: [{ latencyMs: 12, result: validCategory }],
+    };
+    expect(predictResponseSchema.safeParse(resp).success).toBe(false);
+  });
+
+  it('rejects an empty model version id', () => {
+    const resp = {
+      ...validPredictResp,
+      predictions: [
+        { modelVersionId: '', latencyMs: 12, result: validCategory },
+      ],
+    };
+    expect(predictResponseSchema.safeParse(resp).success).toBe(false);
+  });
+
+  it('rejects a negative latency', () => {
+    const resp = {
+      ...validPredictResp,
+      predictions: [
+        { modelVersionId: 'mv_1', latencyMs: -1, result: validCategory },
+      ],
+    };
+    expect(predictResponseSchema.safeParse(resp).success).toBe(false);
+  });
+
+  it('rejects an unknown failure reason', () => {
+    const resp = {
+      ...validPredictResp,
+      failures: [{ task: 'TOPIC', reason: 'MODEL_WAS_SAD' }],
+    };
+    expect(predictResponseSchema.safeParse(resp).success).toBe(false);
   });
 });

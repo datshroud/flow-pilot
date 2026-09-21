@@ -26,6 +26,11 @@ export {
   confidenceSchema,
   duplicateCandidateSchema,
   predictionResultSchema,
+  predictRequestSchema,
+  predictionFailureReasonSchema,
+  predictionFailureSchema,
+  predictionSchema,
+  predictResponseSchema,
 } from './prediction.schema.js';
 
 export type { HealthResp, HealthStatus } from './health.schema.js';
@@ -55,4 +60,9 @@ export type {
   Confidence,
   DuplicateCandidate,
   PredictionResult,
+  PredictRequest,
+  PredictionFailureReason,
+  PredictionFailure,
+  Prediction,
+  PredictResponse,
 } from './prediction.schema.js';
