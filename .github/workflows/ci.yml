@@ -108,7 +108,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt -r requirements-dev.txt
           pip install -e . --no-deps
-          
+
       # A recompile-and-diff check cannot work here. pip-tools 7.6 resolves for
       # the platform it runs on, so a lockfile compiled on a Windows dev machine
       # never matches one compiled on this Linux runner: pandas requires tzdata
@@ -155,7 +155,6 @@ jobs:
 
           sys.exit(1 if failed else 0)
           PY
-
 
       - name: Lint
         run: ruff check .
