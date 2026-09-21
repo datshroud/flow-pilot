@@ -21,6 +21,12 @@ export {
   createTicketRequestSchema,
   ticketResponseSchema,
 } from './ticket.schema.js';
+export {
+  predictionTaskSchema,
+  confidenceSchema,
+  duplicateCandidateSchema,
+  predictionResultSchema,
+} from './prediction.schema.js';
 
 export type { HealthResp, HealthStatus } from './health.schema.js';
 export type { ErrorEnvelope, PublicError } from './error.schema.js';
@@ -44,3 +50,9 @@ export type {
   CreateTicketRequest,
   TicketResponse,
 } from './ticket.schema.js';
+export type {
+  PredictionTask,
+  Confidence,
+  DuplicateCandidate,
+  PredictionResult,
+} from './prediction.schema.js';

@@ -19,5 +19,9 @@ describe('@flowpilot/contracts', () => {
     expect(contracts.ticketCategorySchema).toBeDefined();
     expect(contracts.createTicketRequestSchema).toBeDefined();
     expect(contracts.ticketResponseSchema).toBeDefined();
+    expect(contracts.predictionTaskSchema).toBeDefined();
+    expect(contracts.confidenceSchema).toBeDefined();
+    expect(contracts.duplicateCandidateSchema).toBeDefined();
+    expect(contracts.predictionResultSchema).toBeDefined();
   });
 });
